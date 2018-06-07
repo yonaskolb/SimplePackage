@@ -22,9 +22,10 @@ func standardOut(_ string: String, terminator: String = "\n") {
     FileHandle.standardOutput.write(data)
 }
 
-func standardError(_ string: String, terminator: String = "\n") {
-    guard let data = "\(string)\(terminator)".data(using: .utf8) else { return }
+func standardError(_ string: String, terminator: String = "\n") -> Never {
+    guard let data = "\(string)\(terminator)".data(using: .utf8) else { exit(1) }
     FileHandle.standardError.write(data)
+    exit(1)
 }
 
 if args.first == "help" || args.first == "-h" || args.first == "--help" {
@@ -33,9 +34,17 @@ if args.first == "help" || args.first == "-h" || args.first == "--help" {
     ask()
 } else if args.first == "error" {
     standardError("this is an error")
-    exit(1)
 } else if args.first == "continue" {
     printHello()
+} else if args.first == "env" {
+    guard args.count >= 2 else {
+        standardError("must pass env name")
+    }
+    let envName = args[1]
+    guard let env = ProcessInfo.processInfo.environment[envName] else {
+        standardError("\(envName) not found")
+    }
+    print(env)
 } else {
-    standardOut("4.0.0")
+    standardOut("5.0.0")
 }
