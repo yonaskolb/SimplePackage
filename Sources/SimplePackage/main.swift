@@ -1,6 +1,7 @@
 
 import Foundation
 
+invalid
 let args = Array(CommandLine.arguments.dropFirst())
 
 func ask() {
