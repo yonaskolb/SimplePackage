@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SimplePackage",
     products: [
-        .executable(name: "simplepackage", targets: ["SimplePackage"]),
+        .executableError(name: "simplepackage", targets: ["SimplePackage"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
